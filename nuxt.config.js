@@ -10,13 +10,24 @@ module.exports = {
       { hid: 'description', name: 'description', content: 'Nuxt.js project' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {
+        rel: 'stylesheet',
+        type: 'text/css',
+        crossorigin: 'anonymous',
+        href: 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
+        integrity:'sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm'
+      }
     ]
   },
   /*
   ** Customize the progress bar color
   */
   loading: { color: '#3B8070' },
+  /* Plugins */
+  plugins: [
+    '~/plugins/bootstrap'
+  ],
   /*
   ** Build configuration
   */
