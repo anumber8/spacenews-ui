@@ -27,6 +27,10 @@ module.exports = {
   modules: [
     '@nuxtjs/axios'
   ],
+  axios: {
+    // override with API_URL in production env
+    baseURL: 'http://localhost:8000'
+  },
   /* Plugins */
   plugins: [
     '~/plugins/bootstrap'
