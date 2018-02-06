@@ -11,7 +11,12 @@
           <b-nav-item to="/submit">Submit</b-nav-item>
         </b-navbar-nav>
 
-        <b-navbar-nav class="ml-auto">
+        <b-navbar-nav class="ml-auto" v-if="isAuth">
+          <b-nav-text v-if="user">{{ user.username }}</b-nav-text>
+          <b-nav-item @click.prevent="doLogout">Logout</b-nav-item>
+        </b-navbar-nav>
+
+        <b-navbar-nav class="ml-auto" v-if="!isAuth">
           <b-nav-item to="/login">Login</b-nav-item>
           <b-nav-item to="/signup">Signup</b-nav-item>
         </b-navbar-nav>
@@ -25,6 +30,20 @@
   </b-container>
 </template>
 
-<style>
+<script>
+import { mapGetters, mapActions } from 'vuex'
 
-</style>
+export default {
+  computed: {
+    ...mapGetters(['isAuth', 'user'])
+  },
+  methods: {
+    doLogout () {
+      this.logout()
+      this.$router.push('/')
+    },
+    ...mapActions(['logout'])
+  }
+}
+
+</script>

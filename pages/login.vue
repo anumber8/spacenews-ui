@@ -1,7 +1,6 @@
 <template>
   <div>
     <b-alert variant="danger" :show="loginFailed" dismissible>Sorry, invalid username or password.</b-alert>
-    <b-alert variant="success" :show="authToken" dismissible>You've logged in! Authentication token is {{ authToken }}</b-alert>
     <b-form @submit.prevent="submit" novalidate>
       <b-form-group label="Username" :invalid-feedback="errors.first('username')" :state="!errors.has('username')">
         <b-form-input type="text" name="username" v-model="form.username" v-validate="'required'"></b-form-input>
@@ -15,6 +14,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   data () {
     return {
@@ -22,8 +23,7 @@ export default {
         username: '',
         password: ''
       },
-      loginFailed: false,
-      authToken: null
+      loginFailed: false
     }
   },
   methods: {
@@ -34,7 +34,6 @@ export default {
       }
       try {
         this.loginFailed = false
-        this.authToken = null
         // baseURL should point to nodeJS instead of the usual location
         // might need to configure this later with proxies etc
         const resp = await this.$axios.post(
@@ -42,13 +41,13 @@ export default {
           this.form, {
           baseURL: ''
         })
-        this.authToken = resp.data.token
-        // this.$router.push('/')
+        this.login(resp.data.token)
+        this.$router.push('/')
       } catch (e) {
-        console.log('login failed')
         this.loginFailed = true
       }
-    }
+    },
+    ...mapActions(['login'])
   }
 }
 </script>

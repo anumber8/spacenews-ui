@@ -1,3 +1,5 @@
-export default function ({ redirect }) {
-  return redirect('/login')
+export default function ({ redirect, store }) {
+  if (!store.getters.isAuth) {
+    return redirect('/login')
+  }
 }
