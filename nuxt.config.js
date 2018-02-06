@@ -33,7 +33,8 @@ module.exports = {
   },
   /* Plugins */
   plugins: [
-    '~/plugins/bootstrap'
+    '~/plugins/bootstrap',
+    '~/plugins/validate'
   ],
   /*
   ** Build configuration
