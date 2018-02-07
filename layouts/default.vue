@@ -1,7 +1,5 @@
 <template>
   <b-container class="mt-4">
-    {{ $auth.token }}
-    {{ $auth.state }}
     <b-navbar toggleable="md" type="dark" variant="info">
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-navbar-brand to="/">Space News</b-navbar-brand>
@@ -15,7 +13,7 @@
 
         <b-navbar-nav class="ml-auto" v-if="$auth.state.loggedIn">
           <b-nav-text>{{ $auth.state.user.username }}</b-nav-text>
-          <b-nav-item @click.prevent="$auth.logout()">Logout</b-nav-item>
+          <b-nav-item @click.prevent="logout()">Logout</b-nav-item>
         </b-navbar-nav>
 
         <b-navbar-nav class="ml-auto" v-if="!$auth.state.loggedIn">
@@ -31,3 +29,14 @@
 
   </b-container>
 </template>
+
+<script>
+export default {
+  methods: {
+    async logout () {
+      await this.$auth.logout()
+      this.$axios.setHeader('Authorization', null)
+    }
+  }
+}
+</script>

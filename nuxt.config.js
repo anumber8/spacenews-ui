@@ -27,6 +27,7 @@ module.exports = {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/auth',
+    '@nuxtjs/toast',
     'bootstrap-vue/nuxt'
   ],
   axios: {
@@ -35,12 +36,16 @@ module.exports = {
   proxy: {
     '/api': 'http://localhost:8000'
   },
+  toast: {
+    position: 'center',
+    theme: 'bubble'
+  },
   auth: {
     fetchUserOnLogin: true,
     endpoints: {
       login: { url: '/api/auth/token/create/', method: 'post', propertyName: 'auth_token' },
       logout: { url: '/api/auth/token/destroy/', method: 'post' },
-      user: { url: '/api/auth/me/' },
+      user: { url: '/api/auth/me/', propertyName: false },
     },
     token: {
       type: 'Token',
