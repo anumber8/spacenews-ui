@@ -1,16 +1,16 @@
 <template>
   <div>
-    <p v-if="error">Sorry, an error has occurred.</p>
-    <ul>
-      <li v-for="post in posts" :key="post.id">
-        <a href="">{{ post.title }}</a>
-      </li>
-    </ul>
+    <post v-for="post in posts" :key="post.id" :post="post" class="mb-4"></post>
   </div>
 </template>
 
 <script>
+import Post from '~/components/Post'
+
 export default {
+  components: {
+    Post
+  },
   async asyncData ({ app }) {
     try {
       const response = await app.$axios.get('/api/posts/')
