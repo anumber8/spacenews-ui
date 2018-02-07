@@ -1,5 +1,7 @@
 <template>
   <b-container class="mt-4">
+    {{ $auth.token }}
+    {{ $auth.state }}
     <b-navbar toggleable="md" type="dark" variant="info">
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-navbar-brand to="/">Space News</b-navbar-brand>
@@ -11,12 +13,12 @@
           <b-nav-item to="/submit">Submit</b-nav-item>
         </b-navbar-nav>
 
-        <b-navbar-nav class="ml-auto" v-if="isAuth">
-          <b-nav-text v-if="user">{{ user.username }}</b-nav-text>
-          <b-nav-item @click.prevent="doLogout">Logout</b-nav-item>
+        <b-navbar-nav class="ml-auto" v-if="$auth.state.loggedIn">
+          <b-nav-text>{{ $auth.state.user.username }}</b-nav-text>
+          <b-nav-item @click.prevent="$auth.logout()">Logout</b-nav-item>
         </b-navbar-nav>
 
-        <b-navbar-nav class="ml-auto" v-if="!isAuth">
+        <b-navbar-nav class="ml-auto" v-if="!$auth.state.loggedIn">
           <b-nav-item to="/login">Login</b-nav-item>
           <b-nav-item to="/signup">Signup</b-nav-item>
         </b-navbar-nav>
@@ -29,21 +31,3 @@
 
   </b-container>
 </template>
-
-<script>
-import { mapGetters, mapActions } from 'vuex'
-
-export default {
-  computed: {
-    ...mapGetters(['isAuth', 'user'])
-  },
-  methods: {
-    doLogout () {
-      this.logout()
-      this.$router.push('/')
-    },
-    ...mapActions(['logout'])
-  }
-}
-
-</script>

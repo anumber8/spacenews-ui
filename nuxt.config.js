@@ -25,17 +25,36 @@ module.exports = {
   */
   loading: { color: '#3B8070' },
   modules: [
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/auth',
+    'bootstrap-vue/nuxt'
   ],
   axios: {
-    // override with API_URL in production env
-    baseURL: 'http://localhost:8000'
+    proxy: true
+  },
+  proxy: {
+    '/api': 'http://localhost:8000'
+  },
+  auth: {
+    fetchUserOnLogin: true,
+    endpoints: {
+      login: { url: '/api/auth/token/create/', method: 'post', propertyName: 'auth_token' },
+      logout: { url: '/api/auth/token/destroy/', method: 'post' },
+      user: { url: '/api/auth/me/' },
+    },
+    token: {
+      type: 'Token',
+      name: 'token'
+    },
+    redirect: {
+      login: '/login',
+      home: '/'
+    }
   },
   /* Plugins */
   plugins: [
-    '~/plugins/bootstrap',
+    // '~/plugins/bootstrap',
     '~/plugins/validate'
-    // '~/plugins/axios'
   ],
   /*
   ** Build configuration

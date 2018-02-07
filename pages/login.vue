@@ -14,9 +14,8 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-
 export default {
+  middleware: ['auth'],
   data () {
     return {
       form: {
@@ -28,26 +27,17 @@ export default {
   },
   methods: {
     async submit () {
-      await this.$validator.validateAll()
-      if (this.errors.any()) {
-        return
-      }
-      try {
-        this.loginFailed = false
-        // baseURL should point to nodeJS instead of the usual location
-        // might need to configure this later with proxies etc
-        const resp = await this.$axios.post(
-          '/auth/login',
-          this.form, {
-          baseURL: ''
+      await this.$auth.login({ data: this.form })
+        .then(() => {
+          // redirect not happening, so run manually
+          console.log('auth', this.$store.state.auth.loggedIn)
+          this.$router.push('/')
         })
-        this.login(resp.data.token)
-        this.$router.push('/')
-      } catch (e) {
-        this.loginFailed = true
-      }
-    },
-    ...mapActions(['login'])
+        .catch(err => {
+          console.log(err)
+          this.loginFailed = true
+        })
+    }
   }
 }
 </script>
