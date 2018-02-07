@@ -8,7 +8,7 @@
         <b-form-input type="text" name="url" v-model="form.url" v-validate="'url'"></b-form-input>
       </b-form-group>
       <b-form-group label="Description">
-        <b-form-input type="textarea" name="description" v-model="form.description"></b-form-input>
+        <b-form-textarea name="description" v-model="form.description"></b-form-textarea>
       </b-form-group>
       <b-button variant="primary" size="lg" type="submit">Submit</b-button>
     </b-form>

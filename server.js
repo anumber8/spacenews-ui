@@ -4,6 +4,8 @@ const session = require('express-session')
 const app = require('express')()
 const axios = require('axios')
 
+const RedisStore = require('connect-redis')(session)
+
 // Body parser, to access `req.body`
 app.use(bodyParser.json())
 
@@ -14,6 +16,8 @@ app.use(session({
   saveUninitialized: false,
   cookie: { maxAge: 60000 }
 }))
+
+
 //
 
 let config = require('./nuxt.config.js')

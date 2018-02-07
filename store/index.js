@@ -24,18 +24,10 @@ const mutations = {
 }
 
 const actions = {
-  async nuxtServerInit({ commit }, { req }) {
+  async nuxtServerInit({ dispatch, commit }, { req }) {
     if (req.session && req.session.authToken) {
-      try {
-        this.$axios.setToken(req.session.authToken, 'Token')
-        const resp = await this.$axios.get('/api/auth/me/')
-        commit('LOGIN', resp.data)
-      } catch(e) {
-        delete req.session.authToken
-        commit('LOGOUT')
-      }
+      dispatch('login', req.session.authToken)
     } else {
-      console.log('REQ SESSION IS EMPTY', req.session)
       commit('LOGOUT')
     }
   },

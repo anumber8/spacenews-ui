@@ -34,8 +34,8 @@ module.exports = {
   /* Plugins */
   plugins: [
     '~/plugins/bootstrap',
-    '~/plugins/validate',
-    '~/plugins/axios'
+    '~/plugins/validate'
+    // '~/plugins/axios'
   ],
   /*
   ** Build configuration
