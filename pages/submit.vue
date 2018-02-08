@@ -30,6 +30,9 @@ export default {
   methods: {
     async submit () {
       await this.$validator.validateAll()
+      if (this.errors.any()) {
+        return
+      }
       // check valid etc....
       await this.$axios.post('/api/posts/', this.form)
       this.$router.push('/')
