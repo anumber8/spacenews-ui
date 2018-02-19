@@ -8,8 +8,10 @@
     </p>
     <p v-if="$auth.state.loggedIn">
       [ <nuxt-link :to="`/posts/${post.id}`">Discuss</nuxt-link> ]
+      <span v-if="post.is_owner">
       [ <nuxt-link to="/">Edit</nuxt-link> ]
       [ <b-btn variant="link" class="p-0" v-b-modal="modalId">Delete</b-btn> ]
+     </span>
     </p>
     <p v-if="!$auth.state.loggedIn">
       [ <nuxt-link :to="`/posts/${post.id}`">Details</nuxt-link> ]
@@ -37,6 +39,7 @@ export default {
   },
   methods: {
     deletePost () {
+      // TBD: add a post-delete action to props
       this.$axios.delete(`/api/posts/${this.post.id}/`)
       this.deleted = true
       this.$toast.success('Post deleted')

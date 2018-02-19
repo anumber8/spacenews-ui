@@ -71,9 +71,10 @@ export default {
       // handle 400 etc...
       const response = await this.$axios.post(`/api/posts/${this.post.id}/add_comment/`, this.form)
 
-      this.comments.splice(0, 0, response.data)
+      this.topComments.splice(0, 0, response.data)
       this.$validator.reset()
-      this.form.comment = ''
+      this.form.content = ''
+      this.errors.clear()
     }
   }
 }
