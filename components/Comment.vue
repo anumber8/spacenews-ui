@@ -53,7 +53,10 @@ export default {
   methods: {
     clearReplyForm () {
       this.replyForm.content = ''
-      this.errors.clear()
+
+      this.$nextTick(() => {
+        this.$validator.reset()
+      })
     },
     toggleReplyForm () {
       this.showReplyForm = !this.showReplyForm

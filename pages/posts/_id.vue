@@ -55,7 +55,6 @@ export default {
   data() {
     return {
       form: {
-        content: ''
       }
     }
   },
@@ -72,9 +71,10 @@ export default {
       const response = await this.$axios.post(`/api/posts/${this.post.id}/add_comment/`, this.form)
 
       this.topComments.splice(0, 0, response.data)
-      this.$validator.reset()
-      this.form.content = ''
-      this.errors.clear()
+      this.form = {}
+      this.$nextTick(() => {
+        this.$validator.reset()
+      })
     }
   }
 }
