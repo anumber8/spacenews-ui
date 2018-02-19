@@ -15,36 +15,40 @@
       </b-form-group>
       <b-button type="submit" variant="primary">Submit comment</b-button>
     </b-form>
-    <ul>
-      <li v-for="comment in comments" :key="comment.id">
-        {{ comment.content }}
-      </li>
-    </ul>
+    <comment v-for="comment in topComments" :comment="comment" :key="comment.id" :depth="1"></comment>
   </div>
 </template>
 
 <script>
 
 import Post from '~/components/Post'
+import Comment from '~/components/Comment'
 
 export default {
   components: {
-    Post
+    Post,
+    Comment
   },
   async asyncData ({ app, params }) {
-
-    //TBD handle 404 gracefully
 
     let response = await app.$axios.get(`/api/posts/${params.id}/`)
     const post = response.data
 
     response = await app.$axios.get(`/api/posts/${params.id}/comments/`)
-    // TBD: re-arrange comments into tree structure
+
     const comments = response.data
+    const topComments = comments.filter(comment => !comment.parent)
+
+    const appendChildren = parent => {
+      parent.comments = comments.filter(comment => comment.parent === parent.id)
+      parent.comments.forEach(comment => appendChildren(comment))
+    }
+
+    topComments.forEach(parent => appendChildren(parent))
 
     return {
       post,
-      comments
+      topComments
     }
 
   },
