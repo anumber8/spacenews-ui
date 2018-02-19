@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h3>{{ post.title }}</h3>
-    <b-form v-if="$auth.state.loggedIn" @submit.prevent="submitComment" novalidate>
+    <post :post="post"></post>
+    <b-form v-if="$auth.state.loggedIn" @submit.prevent="submitComment" novalidate class="mt-4">
       <b-form-group
         :invalid-feedback="errors.first('content')"
         :state="!errors.has('content')">
@@ -15,7 +15,6 @@
       </b-form-group>
       <b-button type="submit" variant="primary">Submit comment</b-button>
     </b-form>
-    <p v-if="post.description">{{ post.description }}</p>
     <ul>
       <li v-for="comment in comments" :key="comment.id">
         {{ comment.content }}
@@ -25,7 +24,13 @@
 </template>
 
 <script>
+
+import Post from '~/components/Post'
+
 export default {
+  components: {
+    Post
+  },
   async asyncData ({ app, params }) {
 
     //TBD handle 404 gracefully
