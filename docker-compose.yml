@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  nuxt:
+    build:
+      context: .
+    command: bash -c "npm run dev"
+    volumes:
+      - .:/app
+    expose:
+      - "3000"
+    ports:
+      - "3000:3000"
+    # depends_on:
+    #  - nginx
+
